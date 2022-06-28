@@ -2,7 +2,11 @@ import React, { MouseEvent } from "react";
 import { useRef, useEffect, useState } from "react";
 import { hslToRgb } from "./ColorConversion";
 
-export function HueDial(){
+interface HueDialProps{
+  onHueChanged(hue: number): void;
+}
+
+export function HueDial(prop:HueDialProps){
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const canvasSize = 90
   const [hue, setHue] = useState(0)
@@ -58,6 +62,7 @@ export function HueDial(){
     let rect = evt.currentTarget.getBoundingClientRect()
     let [x, y] = [(evt.clientX-rect.x)/canvasSize, (evt.clientY-rect.y)/canvasSize]
     setHue( -Math.atan2(x-0.5, y-0.5)+Math.PI )
+    prop.onHueChanged(hue)
   }
 
   return (
