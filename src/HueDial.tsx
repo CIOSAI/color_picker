@@ -66,6 +66,7 @@ export function HueDial(prop:HueDialProps){
     width={canvasSize} height={canvasSize} 
     onMouseDown={evt=>{setDialingState(true, evt)}}
     onMouseUp={evt=>{setDialingState(false, evt)}}
+    onMouseLeave={evt=>{setDialingState(false, evt)}}
     onMouseMove={evt=>{dial(evt)}}
     ></canvas>
   );
