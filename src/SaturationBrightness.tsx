@@ -58,7 +58,7 @@ export function SatBri(prop:SatBriProps){
     let [x, y] = [(evt.clientX-rect.x)/canvasSize, (evt.clientY-rect.y)/canvasSize]
     setSaturation( x )
     setBrightness( y )
-    prop.onValueChanged(saturation, brightness)
+    prop.onValueChanged(saturation, (1-x/2)*(1-brightness))
   }
 
   return (
