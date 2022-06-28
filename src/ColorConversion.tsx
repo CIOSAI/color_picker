@@ -66,3 +66,24 @@
 
   return [h, s, l];
 }
+
+/**
+ * Converts a RGB array to "rgb(255, 255, 255)" format.
+ * Assumes arr is a 3 item number array 0 to 255 and
+ * returns string "rgb(number, number, number)".
+ *
+ * @param   {number[]}  arr
+ * @return  {string}           The RGB string
+ */
+ export function getColorString(arr:number[], a:number=1){
+  let colorString = a===1?"rgb(":"rgba("
+  colorString += arr[0]; colorString += ', '
+  colorString += arr[1]; colorString += ', '
+  colorString += arr[2]; 
+  if(a!==1){
+    colorString += ', '
+    colorString += a
+  }
+  colorString += ")"
+  return colorString
+}
