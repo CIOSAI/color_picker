@@ -8,7 +8,7 @@ interface HueDialProps{
 
 export function HueDial(prop:HueDialProps){
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
-  const canvasSize = 90
+  const canvasSize = 120
   const [hue, setHue] = useState(0)
   const [dialing, setDialing] = useState(false)
 

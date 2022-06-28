@@ -1,7 +1,7 @@
 
 .PickerPanel {
   background-color: white;
-  width: max(100px, 10%);
+  width: max(min-content, 10%);
   height: max-content;
   padding: .5em;
 }

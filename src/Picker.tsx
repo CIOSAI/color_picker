@@ -10,7 +10,9 @@ export function Picker(){
   const [brightness, setBrightness] = useState(0)
 
   let hueNormalized = () => hue/(Math.PI*2)
-
+//  style={
+//   {backgroundColor: getColorString(hslToRgb(hueNormalized(), saturation, brightness))}
+// }
   return (
     <div className="PickerPanel" style={
       {backgroundColor: getColorString(hslToRgb(hueNormalized(), saturation, brightness))}
