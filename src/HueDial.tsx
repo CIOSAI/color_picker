@@ -35,12 +35,17 @@ export function HueDial(prop:HueDialProps){
     ctx.stroke()
 
     let angle = hue-Math.PI/2
-    ctx.strokeStyle = getColorString(hslToRgb(hue/(Math.PI*2), 1, 0.5))
-    ctx.lineWidth = s*0.15
-    ctx.lineCap = "round"
+    ctx.strokeStyle = "#cecece"
+    ctx.lineWidth = s*0.1
     ctx.beginPath()
-    ctx.moveTo(s/2+Math.cos(angle)*s*0.2, s/2+Math.sin(angle)*s*0.2)
-    ctx.lineTo(s/2+Math.cos(angle)*s*0.4, s/2+Math.sin(angle)*s*0.4)
+    ctx.ellipse(s/2+Math.cos(angle)*s*0.3, s/2+Math.sin(angle)*s*0.3, s*0.1, s*0.1,
+    0, 0, Math.PI*2)
+    ctx.stroke()
+    ctx.strokeStyle = "#fff"
+    ctx.lineWidth = s*0.07
+    ctx.beginPath()
+    ctx.ellipse(s/2+Math.cos(angle)*s*0.3, s/2+Math.sin(angle)*s*0.3, s*0.1, s*0.1,
+    0, 0, Math.PI*2)
     ctx.stroke()
   }
 
