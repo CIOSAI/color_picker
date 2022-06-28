@@ -17,23 +17,13 @@ export function SatBri(prop:SatBriProps){
   let draw = (ctx:CanvasRenderingContext2D, s:number) =>{
     ctx.clearRect(0, 0, s, s)
 
-    ctx.fillRect(0, 0, s, s)
-    let brightGradient = ctx.createLinearGradient(0, 0, 0, s)
-    for(let i=0; i<1; i+=0.02){
-      brightGradient.addColorStop(i, getColorString(hslToRgb(prop.hue, 0, i), 1))
+    let density = 0.02
+    for(let x=0; x<1; x+=density){
+      for(let y=0; y<1; y+=density){
+        ctx.fillStyle = getColorString(hslToRgb(prop.hue, x, (1-x/2)*(1-y) ))
+        ctx.fillRect(Math.floor(x*s), Math.floor(y*s), Math.ceil(density*s), Math.ceil(density*s) )
+      }
     }
-    ctx.fillStyle = brightGradient
-    ctx.fillRect(0, 0, s, s)
-
-    ctx.globalCompositeOperation = "destination-in"
-
-    let saturationGradient = ctx.createLinearGradient(0, 0, s, 0)
-    for(let i=0; i<1; i+=0.02){
-      saturationGradient.addColorStop(i, getColorString(hslToRgb(prop.hue, i, 1-i/2), 1))
-    }
-    ctx.fillStyle = saturationGradient
-
-    ctx.globalCompositeOperation = "source-over";
 
     ctx.strokeStyle = "#cecece"
     ctx.lineWidth = s*0.1
