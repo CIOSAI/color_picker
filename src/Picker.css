@@ -1,12 +1,32 @@
 
 .PickerPanel {
   background-color: white;
-  width: max(min-content, 10%);
-  height: max-content;
+  width: min-content;
+  height: 240px;
+  border-radius: 20px 20px;
   padding: .5em;
 }
 
-#sb {
-  min-width: 90px;
-  min-height: 90px;
+#sb{
+  text-align: left;
+  position: relative;
+  user-select: none;
+}
+
+#sb p{
+  color: wheat;
+}
+
+#SatBri, #cursor{
+  position: absolute;
+  left: 12%;
+}
+
+#cursor{
+  z-index: 5;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: white;
+  background-color: rgba(0, 0, 0, 0);
+  pointer-events: none;
 }

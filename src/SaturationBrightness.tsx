@@ -1,6 +1,6 @@
 import React, { MouseEvent } from "react";
 import { useRef, useEffect, useState } from "react";
-import { hslToRgb, getColorString } from "./ColorConversion";
+import { hsvToRgb, getColorString } from "./ColorConversion";
 
 interface SatBriProps{
   hue: number
@@ -10,9 +10,17 @@ interface SatBriProps{
 export function SatBri(prop:SatBriProps){
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const canvasSize = 90
+  const cursorSize = 0.15 * canvasSize
+  const cursorWidth = 0.1 * canvasSize
+  const [rawX, setRawX] = useState(0)
+  const [rawY, setRawY] = useState(0)
   const [saturation, setSaturation] = useState(0)
   const [brightness, setBrightness] = useState(0)
   const [dialing, setDialing] = useState(false)
+  const dialingRef = useRef<boolean | null>(null); dialingRef.current = dialing
+
+  const [left, setLeft] = useState(0)
+  const [top, setTop] = useState(0)
 
   let draw = (ctx:CanvasRenderingContext2D, s:number) =>{
     ctx.clearRect(0, 0, s, s)
@@ -20,24 +28,20 @@ export function SatBri(prop:SatBriProps){
     let density = 0.02
     for(let x=0; x<1; x+=density){
       for(let y=0; y<1; y+=density){
-        ctx.fillStyle = getColorString(hslToRgb(prop.hue, x, (1-x/2)*(1-y) ))
+        ctx.fillStyle = getColorString(hsvToRgb(prop.hue, x, (1-y) ))
         ctx.fillRect(Math.floor(x*s), Math.floor(y*s), Math.ceil(density*s), Math.ceil(density*s) )
       }
     }
-
-    ctx.strokeStyle = "#cecece"
-    ctx.lineWidth = s*0.1
-    ctx.beginPath()
-    ctx.ellipse(saturation*s, brightness*s, s*0.1, s*0.1,
-    0, 0, Math.PI*2)
-    ctx.stroke()
-    ctx.strokeStyle = "#fff"
-    ctx.lineWidth = s*0.07
-    ctx.beginPath()
-    ctx.ellipse(saturation*s, brightness*s, s*0.1, s*0.1,
-    0, 0, Math.PI*2)
-    ctx.stroke()
   }
+
+  useEffect(() => {
+    document.addEventListener("mousemove", evt=>{updateRawCoord(evt)})
+    document.addEventListener("mouseup", evt=>{setDialingState(false, evt as any)})
+    if(canvasRef.current){
+      let rect = canvasRef.current.getBoundingClientRect()
+      setLeft(rect.left); setTop(rect.top)
+    }
+  }, [])
 
   useEffect(() => {
     if(canvasRef.current){
@@ -47,27 +51,44 @@ export function SatBri(prop:SatBriProps){
   }, [prop.hue, saturation, brightness])
 
   let setDialingState = (b:boolean, evt:MouseEvent) => {
-    if(evt.button===0){
+    if(evt.button==0){
       setDialing(b)
     }
   }
 
-  let dial = (evt:MouseEvent) => {
-    if(!dialing) return
-    let rect = evt.currentTarget.getBoundingClientRect()
-    let [x, y] = [(evt.clientX-rect.x)/canvasSize, (evt.clientY-rect.y)/canvasSize]
-    setSaturation( x )
-    setBrightness( y )
-    prop.onValueChanged(saturation, (1-x/2)*(1-brightness))
+  let updateRawCoord = (evt:globalThis.MouseEvent) => {
+    setRawX(evt.clientX); setRawY(evt.clientY)
   }
 
+  let clamp = (val:number, min:number, max:number) => Math.max(Math.min(val, max), min)
+
+  useEffect(() => {
+    console.log(left)
+    if(dialingRef.current){
+      let [x, y] = [(rawX-left)/canvasSize, (rawY-top)/canvasSize]
+      setSaturation( clamp(x, 0, 1) )
+      setBrightness( clamp(y, 0, 1) )
+      prop.onValueChanged(saturation, (1-brightness))
+    }
+  }, [rawX, rawY])
+
+  let adjust = cursorSize/2+cursorWidth
+  let cursorX = saturation*canvasSize-adjust
+  let cursorY = brightness*canvasSize-adjust
+  let toPx = (x:number) => x.toString()+"px"
   return (
-    <canvas ref={canvasRef} id="SatBri" 
+    <div id="sb">
+    <canvas ref={canvasRef} id="SatBri"
     width={canvasSize} height={canvasSize} 
     onMouseDown={evt=>{setDialingState(true, evt)}}
-    onMouseUp={evt=>{setDialingState(false, evt)}}
-    onMouseLeave={evt=>{setDialingState(false, evt)}}
-    onMouseMove={evt=>{dial(evt)}}
     ></canvas>
+    <div id="cursor" style={{
+      width:       toPx(cursorSize),
+      height:      toPx(cursorSize),
+      borderWidth: toPx(cursorWidth),
+      left:        toPx(left-cursorWidth+cursorX), 
+      top:         toPx(cursorY)
+      }}></div>
+    </div>
   );
 }
