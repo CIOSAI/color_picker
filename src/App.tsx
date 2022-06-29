@@ -7,6 +7,8 @@ function App() {
   return (
     <div className="App">
       <ColorBlock/>
+      <ColorBlock/>
+      <ColorBlock/>
     </div>
   );
 }

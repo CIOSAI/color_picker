@@ -11,7 +11,7 @@ interface PickerProps{
 export function Picker(prop:PickerProps){
   const [hue, setHue] = useState(0)
   const [saturation, setSaturation] = useState(0)
-  const [brightness, setBrightness] = useState(0)
+  const [brightness, setBrightness] = useState(1)
 
   let hueNormalized = () => hue/(Math.PI*2)
 //  style={

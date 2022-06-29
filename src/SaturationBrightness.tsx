@@ -39,7 +39,9 @@ export function SatBri(prop:SatBriProps){
     document.addEventListener("mouseup", evt=>{setDialingState(false, evt as any)})
     if(canvasRef.current){
       let rect = canvasRef.current.getBoundingClientRect()
-      setLeft(rect.left); setTop(rect.top)
+      setLeft(rect.left)
+      setTop(rect.top)
+      // console.log(rect)
     }
   }, [])
 
@@ -63,7 +65,6 @@ export function SatBri(prop:SatBriProps){
   let clamp = (val:number, min:number, max:number) => Math.max(Math.min(val, max), min)
 
   useEffect(() => {
-    console.log(left)
     if(dialingRef.current){
       let [x, y] = [(rawX-left)/canvasSize, (rawY-top)/canvasSize]
       setSaturation( clamp(x, 0, 1) )

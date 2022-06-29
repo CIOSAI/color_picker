@@ -1,3 +1,18 @@
 .ColorBlock{
-  width: min-content;
+  height: 4em;
+  width: 4em;
+  position: relative;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hexString{
+  display: block;
+}
+
+.dropDown{
+  display: block;
+  z-index: 1;
 }
