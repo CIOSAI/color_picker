@@ -75,7 +75,6 @@ export function SatBri(prop:SatBriProps){
   let adjust = cursorSize/2+cursorWidth
   let cursorX = saturation*canvasSize-adjust
   let cursorY = brightness*canvasSize-adjust
-  let toPx = (x:number) => x.toString()+"px"
   return (
     <div id="sb">
       <canvas 
@@ -87,11 +86,11 @@ export function SatBri(prop:SatBriProps){
       <div 
         id="cursor" 
         style={{
-          width:       toPx(cursorSize),
-          height:      toPx(cursorSize),
-          borderWidth: toPx(cursorWidth),
-          left:        toPx(left-cursorWidth+cursorX), 
-          top:         toPx(cursorY)
+          width:       cursorSize,
+          height:      cursorSize,
+          borderWidth: cursorWidth,
+          left:        left-cursorWidth+cursorX, 
+          top:         cursorY
         }}
       />
     </div>
