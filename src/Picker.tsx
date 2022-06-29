@@ -1,10 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Picker.css';
 import { HueDial } from './HueDial';
 import { SatBri } from './SaturationBrightness';
-import { hsvToRgb, getColorString } from './ColorConversion';
+import { hsvToRgb, rgbToHex } from './ColorConversion';
 
-export function Picker(){
+interface PickerProps{
+  onColorChanged(hex:string):void
+}
+
+export function Picker(prop:PickerProps){
   const [hue, setHue] = useState(0)
   const [saturation, setSaturation] = useState(0)
   const [brightness, setBrightness] = useState(0)
@@ -13,13 +17,23 @@ export function Picker(){
 //  style={
 //   {backgroundColor: getColorString(hslToRgb(hueNormalized(), saturation, brightness))}
 // }
+  useEffect(()=>{
+    let [r, g, b] = hsvToRgb(hueNormalized(), saturation, brightness)
+    let hex = rgbToHex(Math.round(r), Math.round(g), Math.round(b))
+
+    prop.onColorChanged(hex)
+  }, [hue, saturation, brightness])
+
   return (
-    <div className="PickerPanel" style={
-      {backgroundColor: getColorString(hsvToRgb(hueNormalized(), saturation, brightness))}
-    }>
-      <HueDial onHueChanged={hue => {setHue(hue)}}></HueDial>
-      <br></br>
-      <SatBri hue={hueNormalized()} onValueChanged={(sat, bri)=>{setSaturation(sat); setBrightness(bri)}}></SatBri>
+    <div className="PickerPanel">
+      <HueDial 
+        onHueChanged={hue => {setHue(hue)}}
+      />
+      <br/>
+      <SatBri 
+        hue={hueNormalized()} 
+        onValueChanged={(sat, bri)=>{setSaturation(sat); setBrightness(bri)}}
+      />
     </div>
   );
 }

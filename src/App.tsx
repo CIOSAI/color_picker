@@ -1,12 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Picker } from './Picker';
+import { ColorBlock } from './ColorBlock';
 
 function App() {
   return (
     <div className="App">
-      <Picker></Picker>
+      <ColorBlock/>
     </div>
   );
 }
