@@ -78,17 +78,22 @@ export function SatBri(prop:SatBriProps){
   let toPx = (x:number) => x.toString()+"px"
   return (
     <div id="sb">
-    <canvas ref={canvasRef} id="SatBri"
-    width={canvasSize} height={canvasSize} 
-    onMouseDown={evt=>{setDialingState(true, evt)}}
-    ></canvas>
-    <div id="cursor" style={{
-      width:       toPx(cursorSize),
-      height:      toPx(cursorSize),
-      borderWidth: toPx(cursorWidth),
-      left:        toPx(left-cursorWidth+cursorX), 
-      top:         toPx(cursorY)
-      }}></div>
+      <canvas 
+        ref={canvasRef} 
+        id="SatBri"
+        width={canvasSize} height={canvasSize} 
+        onMouseDown={evt=>{setDialingState(true, evt)}}
+      />
+      <div 
+        id="cursor" 
+        style={{
+          width:       toPx(cursorSize),
+          height:      toPx(cursorSize),
+          borderWidth: toPx(cursorWidth),
+          left:        toPx(left-cursorWidth+cursorX), 
+          top:         toPx(cursorY)
+        }}
+      />
     </div>
   );
 }
