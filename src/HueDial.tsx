@@ -1,6 +1,6 @@
 import React, { MouseEvent } from "react";
 import { useRef, useEffect, useState } from "react";
-import { hslToRgb, getColorString } from "./ColorConversion";
+import { hsvToRgb, getColorString } from "./ColorConversion";
 
 interface HueDialProps{
   onHueChanged(hue: number): void;
@@ -17,7 +17,7 @@ export function HueDial(prop:HueDialProps){
 
     let gradient = ctx.createConicGradient(-Math.PI/2, s/2, s/2)
     for(let i=0; i<1; i+=0.05){
-      gradient.addColorStop(i, getColorString(hslToRgb(i, 1, 0.5)))
+      gradient.addColorStop(i, getColorString(hsvToRgb(i, 1, 1)))
     }
     ctx.strokeStyle = gradient
     ctx.lineWidth = s*0.15
@@ -26,12 +26,6 @@ export function HueDial(prop:HueDialProps){
     ctx.stroke()
 
     let angle = hue-Math.PI/2
-    ctx.strokeStyle = "#cecece"
-    ctx.lineWidth = s*0.1
-    ctx.beginPath()
-    ctx.ellipse(s/2+Math.cos(angle)*s*0.3, s/2+Math.sin(angle)*s*0.3, s*0.1, s*0.1,
-    0, 0, Math.PI*2)
-    ctx.stroke()
     ctx.strokeStyle = "#fff"
     ctx.lineWidth = s*0.07
     ctx.beginPath()

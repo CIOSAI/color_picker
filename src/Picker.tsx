@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './Picker.css';
 import { HueDial } from './HueDial';
 import { SatBri } from './SaturationBrightness';
-import { hslToRgb, getColorString } from './ColorConversion';
+import { hsvToRgb, getColorString } from './ColorConversion';
 
 export function Picker(){
   const [hue, setHue] = useState(0)
@@ -15,7 +15,7 @@ export function Picker(){
 // }
   return (
     <div className="PickerPanel" style={
-      {backgroundColor: getColorString(hslToRgb(hueNormalized(), saturation, brightness))}
+      {backgroundColor: getColorString(hsvToRgb(hueNormalized(), saturation, brightness))}
     }>
       <HueDial onHueChanged={hue => {setHue(hue)}}></HueDial>
       <br></br>

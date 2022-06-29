@@ -1,6 +1,6 @@
 import React, { MouseEvent } from "react";
 import { useRef, useEffect, useState } from "react";
-import { hslToRgb, getColorString } from "./ColorConversion";
+import { hsvToRgb, getColorString } from "./ColorConversion";
 
 interface SatBriProps{
   hue: number
@@ -10,6 +10,8 @@ interface SatBriProps{
 export function SatBri(prop:SatBriProps){
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const canvasSize = 90
+  const cursorSize = 0.15 * canvasSize
+  const cursorWidth = 0.1 * canvasSize
   const [rawX, setRawX] = useState(0)
   const [rawY, setRawY] = useState(0)
   const [saturation, setSaturation] = useState(0)
@@ -26,7 +28,7 @@ export function SatBri(prop:SatBriProps){
     let density = 0.02
     for(let x=0; x<1; x+=density){
       for(let y=0; y<1; y+=density){
-        ctx.fillStyle = getColorString(hslToRgb(prop.hue, x, (1-x/2)*(1-y) ))
+        ctx.fillStyle = getColorString(hsvToRgb(prop.hue, x, (1-y) ))
         ctx.fillRect(Math.floor(x*s), Math.floor(y*s), Math.ceil(density*s), Math.ceil(density*s) )
       }
     }
@@ -35,14 +37,11 @@ export function SatBri(prop:SatBriProps){
   useEffect(() => {
     document.addEventListener("mousemove", evt=>{updateRawCoord(evt)})
     document.addEventListener("mouseup", evt=>{setDialingState(false, evt as any)})
-  }, [])
-
-  useEffect(() => {
     if(canvasRef.current){
       let rect = canvasRef.current.getBoundingClientRect()
-      setLeft(rect.x); setTop(rect.y)
+      setLeft(rect.left); setTop(rect.top)
     }
-  }, [canvasRef])
+  }, [])
 
   useEffect(() => {
     if(canvasRef.current){
@@ -64,16 +63,19 @@ export function SatBri(prop:SatBriProps){
   let clamp = (val:number, min:number, max:number) => Math.max(Math.min(val, max), min)
 
   useEffect(() => {
+    console.log(left)
     if(dialingRef.current){
       let [x, y] = [(rawX-left)/canvasSize, (rawY-top)/canvasSize]
       setSaturation( clamp(x, 0, 1) )
       setBrightness( clamp(y, 0, 1) )
-      prop.onValueChanged(saturation, (1-saturation/2)*(1-brightness))
+      prop.onValueChanged(saturation, (1-brightness))
     }
   }, [rawX, rawY])
 
-  let cursorX = saturation*canvasSize-canvasSize/10
-  let cursorY = brightness*canvasSize-canvasSize/10
+  let adjust = cursorSize/2+cursorWidth
+  let cursorX = saturation*canvasSize-adjust
+  let cursorY = brightness*canvasSize-adjust
+  let toPx = (x:number) => x.toString()+"px"
   return (
     <div id="sb">
     <canvas ref={canvasRef} id="SatBri"
@@ -81,10 +83,11 @@ export function SatBri(prop:SatBriProps){
     onMouseDown={evt=>{setDialingState(true, evt)}}
     ></canvas>
     <div id="cursor" style={{
-      width:(canvasSize/5).toString()+"px" ,
-      height:(canvasSize/5).toString()+"px" ,
-      left:cursorX.toString()+"px", 
-      top:cursorY.toString()+"px"
+      width:       toPx(cursorSize),
+      height:      toPx(cursorSize),
+      borderWidth: toPx(cursorWidth),
+      left:        toPx(left-cursorWidth+cursorX), 
+      top:         toPx(cursorY)
       }}></div>
     </div>
   );
