@@ -9,6 +9,11 @@
 #sb{
   text-align: left;
   position: relative;
+  user-select: none;
+}
+
+#sb p{
+  color: wheat;
 }
 
 #SatBri, #cursor{
@@ -16,8 +21,7 @@
 }
 
 #cursor{
+  z-index: 5;
   background-color: pink;
-  width: 1em;
-  height: 1em;
   border-radius: 50%;
 }
