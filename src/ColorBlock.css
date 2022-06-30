@@ -1,6 +1,8 @@
 .ColorBlock{
-  height: 4em;
-  width: 4em;
+  min-height: 4em;
+  min-width: 4em;
+  max-height: 4em;
+  max-width: 4em;
   position: relative;
   padding: 2em;
   display: flex;

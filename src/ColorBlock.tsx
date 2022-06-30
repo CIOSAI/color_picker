@@ -5,7 +5,7 @@ import {Picker} from './Picker';
 export function ColorBlock(){
   const [hexString, setHexString] = useState("#ffffff")
   const [dropDownOffTrigger, setDropDownOffTrigger] = useState(0)
-  const [dropDownVisible, setDropDownVisible] = useState(true)
+  const [dropDownVisible, setDropDownVisible] = useState(false)
   const [hovering, setHovering] = useState(false)
 
   let mouseClicked = (evt:globalThis.MouseEvent) =>{
@@ -13,7 +13,6 @@ export function ColorBlock(){
   }
 
   useEffect(()=>{
-    setDropDownVisible(false)
     document.addEventListener("mousedown", evt=>{mouseClicked(evt)})
   }, [])
 

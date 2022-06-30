@@ -9,6 +9,7 @@ interface SatBriProps{
 
 export function SatBri(prop:SatBriProps){
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
+  const satBriRef = useRef<HTMLDivElement | null>(null)
   const canvasSize = 90
   const cursorSize = 0.15 * canvasSize
   const cursorWidth = 0.1 * canvasSize
@@ -37,20 +38,23 @@ export function SatBri(prop:SatBriProps){
   useEffect(() => {
     document.addEventListener("mousemove", evt=>{updateRawCoord(evt)})
     document.addEventListener("mouseup", evt=>{setDialingState(false, evt as any)})
+  }, [])
+
+  let satBriRect = satBriRef.current?.getBoundingClientRect()
+  useEffect(()=>{
     if(canvasRef.current){
       let rect = canvasRef.current.getBoundingClientRect()
       setLeft(rect.left)
       setTop(rect.top)
-      // console.log(rect)
     }
-  }, [])
+  }, [satBriRect?.left, satBriRect?.top])
 
   useEffect(() => {
     if(canvasRef.current){
       const context = canvasRef.current.getContext('2d')
       if (context) draw(context, canvasSize)
     }
-  }, [prop.hue, saturation, brightness])
+  }, [prop.hue])
 
   let setDialingState = (b:boolean, evt:MouseEvent) => {
     if(evt.button==0){
@@ -77,7 +81,7 @@ export function SatBri(prop:SatBriProps){
   let cursorX = saturation*canvasSize-adjust
   let cursorY = brightness*canvasSize-adjust
   return (
-    <div id="sb">
+    <div id="sb" ref={satBriRef}>
       <canvas 
         ref={canvasRef} 
         id="SatBri"
@@ -90,7 +94,7 @@ export function SatBri(prop:SatBriProps){
           width:       cursorSize,
           height:      cursorSize,
           borderWidth: cursorWidth,
-          left:        left-cursorWidth+cursorX, 
+          left:        adjust+cursorX, //left-cursorWidth+
           top:         cursorY
         }}
       />

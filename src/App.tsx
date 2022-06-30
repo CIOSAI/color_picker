@@ -6,9 +6,9 @@ import { ColorBlock } from './ColorBlock';
 function App() {
   return (
     <div className="App">
-      <ColorBlock/>
-      <ColorBlock/>
-      <ColorBlock/>
+      <div id="drawer">
+        <ColorBlock/>
+      </div>
     </div>
   );
 }
