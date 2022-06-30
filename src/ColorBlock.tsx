@@ -4,7 +4,8 @@ import {Picker} from './Picker';
 
 interface ColorBlockProps{
   index: string,
-  initialColor?: string
+  initialColor?: string,
+  onHexChanged(i:string, s:string): void
 }
 
 export function ColorBlock(prop:ColorBlockProps){
@@ -25,6 +26,10 @@ export function ColorBlock(prop:ColorBlockProps){
   useEffect(()=>{
     setDropDownVisible(hovering)
   }, [dropDownOffTrigger])
+
+  useEffect(()=>{
+    prop.onHexChanged(prop.index, hexString)
+  }, [hexString])
 
   return (
     <div className="ColorBlock" 
