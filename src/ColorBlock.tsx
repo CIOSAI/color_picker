@@ -3,11 +3,12 @@ import './ColorBlock.css';
 import {Picker} from './Picker';
 
 interface ColorBlockProps{
-  index: string
+  index: string,
+  initialColor?: string
 }
 
 export function ColorBlock(prop:ColorBlockProps){
-  const [hexString, setHexString] = useState("#ffffff")
+  const [hexString, setHexString] = useState(prop.initialColor?prop.initialColor:"#ffffff")
   const [dropDownOffTrigger, setDropDownOffTrigger] = useState(0)
   const [dropDownVisible, setDropDownVisible] = useState(false)
   const [hovering, setHovering] = useState(false)
@@ -29,7 +30,7 @@ export function ColorBlock(prop:ColorBlockProps){
     <div className="ColorBlock" 
       draggable = {!dialing}
       onDragStart = {evt => {
-        evt.dataTransfer.setData("text", prop.index)
+        evt.dataTransfer.setData("text", prop.index + " " + hexString)
         setDropDownVisible(false)
       }}
       style={{
@@ -45,7 +46,7 @@ export function ColorBlock(prop:ColorBlockProps){
         onMouseEnter={()=>{setDialing(true)} }
         onMouseLeave={()=>{setDialing(false)} }
         style={{display: dropDownVisible?"block":"none"}}>
-        <Picker onColorChanged={(hex:string)=>{setHexString(hex)}}/>
+        <Picker initialColor={prop.initialColor} onColorChanged={(hex:string)=>{setHexString(hex)}}/>
       </div>
     </div>
   );

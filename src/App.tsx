@@ -5,7 +5,7 @@ import { ColorBlock } from './ColorBlock';
 import { ColorBlockAdder } from './ColorBlockAdder';
 
 function App() {
-  const handledColorBlockAdder = <ColorBlockAdder key={0} onMouseClick={()=>{addNewColorBlock()}}/>
+  const handledColorBlockAdder = <ColorBlockAdder key={0} onMouseClick={(s)=>{addNewColorBlock(s)}}/>
   const [colorBlocks, setColorBlocks] = useState([handledColorBlockAdder])
   const [trashcanDropHover, setTrashcanDropHover] = useState(false)
   
@@ -16,10 +16,10 @@ function App() {
              ]);
   }
 
-  let addNewColorBlock = () => {
+  let addNewColorBlock = (s:string) => {
     setColorBlocks(colorBlocks => [
       ...colorBlocks.slice(0, colorBlocks.length-1), 
-      <ColorBlock index={new Date().getTime().toString()} key={new Date().getTime()}/>,
+      <ColorBlock initialColor={s} index={new Date().getTime().toString()} key={new Date().getTime()}/>,
       handledColorBlockAdder
     ])
   }
@@ -41,7 +41,7 @@ function App() {
         }}
         onDrop={evt=>{
           evt.preventDefault()
-          let data = evt.dataTransfer.getData("text")
+          let data = evt.dataTransfer.getData("text").split(" ")[0]
           removeColorBlock(colorBlocks.findIndex((v:JSX.Element)=>v.props.index==data))
           setTrashcanDropHover(false)
         }}

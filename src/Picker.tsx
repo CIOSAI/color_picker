@@ -2,16 +2,25 @@ import { useEffect, useState } from 'react';
 import './Picker.css';
 import { HueDial } from './HueDial';
 import { SatBri } from './SaturationBrightness';
-import { hsvToRgb, rgbToHex } from './ColorConversion';
+import { hsvToRgb, rgbToHex, hexToRgb, rgbToHsv } from './ColorConversion';
 
 interface PickerProps{
-  onColorChanged(hex:string):void
+  onColorChanged(hex:string):void,
+  initialColor?:string
 }
 
 export function Picker(prop:PickerProps){
-  const [hue, setHue] = useState(0)
-  const [saturation, setSaturation] = useState(0)
-  const [brightness, setBrightness] = useState(1)
+  let initialHue = 0
+  let initialSat = 0
+  let initialBri = 1
+  if(prop.initialColor){
+    let [r, g, b] = hexToRgb(prop.initialColor)
+    let [h, s, v] = rgbToHsv(r, g, b)
+    initialHue = h*Math.PI*2; initialSat = s; initialBri = v
+  }
+  const [hue, setHue] = useState(initialHue)
+  const [saturation, setSaturation] = useState(initialSat)
+  const [brightness, setBrightness] = useState(initialBri)
 
   let hueNormalized = () => hue/(Math.PI*2)
 //  style={
