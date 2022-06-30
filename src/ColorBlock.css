@@ -10,6 +10,19 @@
   align-items: center;
 }
 
+.ColorBlockAdder{
+  min-height: 4em;
+  min-width: 4em;
+  max-height: 4em;
+  max-width: 4em;
+  position: relative;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .hexString{
   display: block;
 }
