@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { ColorBlock } from './ColorBlock';
@@ -27,7 +27,7 @@ function App() {
           return v
         }
       }):
-      [...arr, [i, s]]
+      [...arr, [i, s]].sort((a, b)=>Number(a[0])-Number(b[0]) )
   }
 
   let deleteHexString = (arr:string[][], i:string):string[][] => {
@@ -35,10 +35,17 @@ function App() {
     return [...arr.slice(0, del), ...arr.slice(del+1)]
   }
 
+  let switchColorBlock = (ti:string, tc:string, si:string, sc:string)=>{
+    // console.log(colorBlocks.findIndex((v:JSX.Element)=>v.props.index==ti))
+    // removeColorBlock(colorBlocks.findIndex((v:JSX.Element)=>v.props.index==ti))
+    // removeColorBlock(colorBlocks.findIndex((v:JSX.Element)=>v.props.index==si))
+  }
+
   let addNewColorBlock = (s:string) => {
     setColorBlocks(colorBlocks => [
       ...colorBlocks.slice(0, colorBlocks.length-1), 
       <ColorBlock 
+        onSwitched={(ti, tc, si, sc)=>{switchColorBlock(ti, tc, si, sc)}}
         onHexChanged={(i, s)=>{setColorHexStrings(colorHexStrings => 
           [...addHexString(colorHexStrings, i, s)]
         )}}
@@ -47,7 +54,7 @@ function App() {
         key={new Date().getTime()}
       />,
       handledColorBlockAdder
-    ])
+    ].sort((a, b)=>a.props.index-b.props.index))
   }
 
   return (

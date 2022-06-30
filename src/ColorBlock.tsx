@@ -6,6 +6,7 @@ interface ColorBlockProps{
   index: string,
   initialColor?: string,
   onHexChanged(i:string, s:string): void
+  onSwitched(ti:string, tc:string, si:string, sc:string): void
 }
 
 export function ColorBlock(prop:ColorBlockProps){
@@ -43,6 +44,18 @@ export function ColorBlock(prop:ColorBlockProps){
       }}
       onMouseEnter={()=>{setHovering(true)} }
       onMouseLeave={()=>{setHovering(false)} }
+
+      onDragEnter={()=>{setHovering(true)}}
+      onDragLeave={()=>{setHovering(false)}}
+      onDragOver={evt=>{
+        evt.preventDefault()
+      }}
+      onDrop={evt=>{
+        evt.preventDefault()
+        let data = evt.dataTransfer.getData("text").split(" ")
+        prop.onSwitched(prop.index, hexString, data[0], data[1])
+        setHovering(false)
+      }}
     >
       <p className="hexString"
         onMouseDown={()=>{setDropDownVisible(true)}}
