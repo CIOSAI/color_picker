@@ -1,17 +1,21 @@
 import React from "react";
 
-function PlusSymbol() {
+interface PlusSymbolProps {
+  hovering: boolean
+}
+
+function PlusSymbol(prop:PlusSymbolProps) {
   return (
     <svg className="plusSymbol"
       xmlns="http://www.w3.org/2000/svg"
-      width="30"
-      height="30"
+      width={prop.hovering?"40":"30"}
+      height={prop.hovering?"40":"30"}
       version="1.1"
       viewBox="0 0 26.458 26.458"
     >
       <g>
         <path
-          fill="#222"
+          fill={prop.hovering?"#222":"#666"}
           fillOpacity="1"
           stroke="none"
           strokeLinecap="butt"
