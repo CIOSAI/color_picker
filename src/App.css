@@ -19,3 +19,12 @@
   border: #222 2px solid;
   box-shadow: 3px 3px 0 0 #222;
 }
+
+#colorTrashcan{
+  min-height: 4em;
+  min-width: 4em;
+  max-height: 4em;
+  max-width: 4em;
+  color: #aaa;
+  border: #aaa 2px solid;
+}

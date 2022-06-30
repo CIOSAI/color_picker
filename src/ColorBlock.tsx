@@ -2,11 +2,16 @@ import { useEffect, useState } from 'react';
 import './ColorBlock.css';
 import {Picker} from './Picker';
 
-export function ColorBlock(){
+interface ColorBlockProps{
+  index: string
+}
+
+export function ColorBlock(prop:ColorBlockProps){
   const [hexString, setHexString] = useState("#ffffff")
   const [dropDownOffTrigger, setDropDownOffTrigger] = useState(0)
   const [dropDownVisible, setDropDownVisible] = useState(false)
   const [hovering, setHovering] = useState(false)
+  const [dialing, setDialing] = useState(false)
 
   let mouseClicked = (evt:globalThis.MouseEvent) =>{
     setDropDownOffTrigger(evt.timeStamp)
@@ -22,6 +27,11 @@ export function ColorBlock(){
 
   return (
     <div className="ColorBlock" 
+      draggable = {!dialing}
+      onDragStart = {evt => {
+        evt.dataTransfer.setData("text", prop.index)
+        setDropDownVisible(false)
+      }}
       style={{
         backgroundColor: hexString
       }}
@@ -31,7 +41,10 @@ export function ColorBlock(){
       <p className="hexString"
         onMouseDown={()=>{setDropDownVisible(true)}}
       >{hexString}</p>
-      <div className="dropDown" style={{display: dropDownVisible?"block":"none"}}>
+      <div className="dropDown" 
+        onMouseEnter={()=>{setDialing(true)} }
+        onMouseLeave={()=>{setDialing(false)} }
+        style={{display: dropDownVisible?"block":"none"}}>
         <Picker onColorChanged={(hex:string)=>{setHexString(hex)}}/>
       </div>
     </div>
