@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './ColorBlock.css';
 import {Picker} from './Picker';
+import {hexToRgb} from './ColorConversion';
 
 interface ColorBlockProps{
   index: string,
@@ -30,6 +31,7 @@ export function ColorBlock(prop:ColorBlockProps){
 
   useEffect(()=>{
     prop.onHexChanged(prop.index, hexString)
+    console.log()
   }, [hexString])
 
   return (
@@ -59,6 +61,10 @@ export function ColorBlock(prop:ColorBlockProps){
     >
       <p className="hexString"
         onMouseDown={()=>{setDropDownVisible(true)}}
+        style={
+          {color: (hexToRgb(hexString).reduce((prev, curr)=>prev+curr, 0)/3)>128?
+            "#000":"#fff"}
+        }
       >{hexString}</p>
       <div className="dropDown" 
         onMouseEnter={()=>{setDialing(true)} }
