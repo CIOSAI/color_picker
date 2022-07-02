@@ -90,6 +90,7 @@ function App() {
         prev+(curr.includes("#")?"'"+curr+"', ":""), "")
       +"]"
       }</p>
+      <a href='https://github.com/CIOSAI/color_picker'>How to Use/Source Code</a>
     </div>
   );
 }
