@@ -1,46 +1,32 @@
-# Getting Started with Create React App
+# Why Use This Tool
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+So many websites for "color generation" or "palette", but I just want a little color picker web app. Because Coolors f^#%ing started to put a bunch of ads in the page, you could just click them off before and now they want you to "upgrade to premium", you can upgrade me to a premium customer by removing those ads.
 
-## Available Scripts
+This color picker tool is made for people who are already familiar with colors, so no auto generated palette shouldn't be much of an issue.
 
-In the project directory, you can run:
+# How to Use
 
-### `npm start`
+*This tool NOT meant to be used with mobile or tablet, you experience f\*ckeries, please turn to other tools made by smarter (I assume) folks :)*
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## The Parts
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Color Drawer
+![image](https://user-images.githubusercontent.com/89374056/176988142-73a5ae0b-b365-43df-9ce7-67acd54b019b.png)
 
-### `npm test`
+Here is where all your colors sit, I plan to allow user to switch the order but no idea how to (I'm using react ts if you know how please help me)
+Add new colors by clicking the plus button, or duplicate one by dropping a color onto it.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Trashcan
+![image](https://user-images.githubusercontent.com/89374056/176988201-6291ff84-56b8-4664-acbb-8fa1142a8251.png)
 
-### `npm run build`
+Drag the color onto it to delete it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### JS array
+![image](https://user-images.githubusercontent.com/89374056/176988276-faad8288-6d3c-4217-ac1a-7a5190d608d2.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+You can copy this string into your javascript/typescript code.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## The Picker
+![image](https://user-images.githubusercontent.com/89374056/176988322-bc653060-5d9d-48ee-a14c-adddd00b85fc.png)
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Click on the hex color text to make the drop down picker expand, the wheel is for hue, the square for saturation and value, click anywhere outside to close it.
